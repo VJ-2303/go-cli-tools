@@ -67,15 +67,15 @@ func (l *List) Save(filename string) error {
 // Get method opens the provided filename, decodes
 // the JSON data and parses it into a List
 func (l *List) Get(filename string) error {
-	file, err := os.ReadFile(filename)
+	data, err := os.ReadFile(filename)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
 			return nil
 		}
 		return err
 	}
-	if len(file) == 0 {
+	if len(data) == 0 {
 		return nil
 	}
-	return json.Unmarshal(file, l)
+	return json.Unmarshal(data, l)
 }

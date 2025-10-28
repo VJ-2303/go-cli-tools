@@ -6,6 +6,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"testing"
 )
 
@@ -60,6 +61,35 @@ func TestTodoCLI(t *testing.T) {
 		expected := fmt.Sprintf("  1: %s\n", task)
 		if expected != string(out) {
 			t.Errorf("Expected %q, but got %q instead", expected, out)
+		}
+	})
+	t.Run("CompleteTask", func(t *testing.T) {
+		cmd := exec.Command(cmdPath, "-complete", "1")
+		if err := cmd.Run(); err != nil {
+			t.Fatal(err)
+		}
+		cmd = exec.Command(cmdPath, "-list")
+		out, err := cmd.CombinedOutput()
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !strings.HasPrefix(string(out), "X") {
+			t.Error("Expected task to be completed")
+		}
+	})
+	t.Run("DeleteTask", func(t *testing.T) {
+		cmd := exec.Command(cmdPath, "-del", "1")
+		if err := cmd.Run(); err != nil {
+			t.Fatal(err)
+		}
+		cmd = exec.Command(cmdPath, "-list")
+		out, err := cmd.CombinedOutput()
+		if err != nil {
+			t.Fatal(err)
+		}
+		expected := ""
+		if expected != string(out) {
+			t.Errorf("Expected empty string but got %s instead", out)
 		}
 	})
 }

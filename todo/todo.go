@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"os"
 	"time"
+
+	"github.com/olekukonko/tablewriter"
 )
 
 // item struct represents a ToDo item
@@ -29,6 +31,25 @@ func (l *List) String() string {
 		formatted += fmt.Sprintf("%s %d: %s\n", prefix, k+1, v.Task)
 	}
 	return formatted
+}
+
+func (l *List) VerbosePrint() error {
+	if len(*l) == 0 {
+		fmt.Println("Please add tasks using -task flag")
+		return nil
+	}
+	table := tablewriter.NewTable(os.Stdout)
+	header := []string{"S No", "Completed", "Title", "Created At", "Completed At"}
+	table.Header(header)
+	for i, v := range *l {
+		prefix := "X"
+		if v.Done {
+			prefix = "✓"
+		}
+		row := []any{i + 1, prefix, v.Task, v.CreatedAt.Format("Mon, Jan 2 2006 03:04 PM"), v.CompletedAt.Format("Mon, Jan 2 2006 03:04 PM")}
+		table.Append(row)
+	}
+	return table.Render()
 }
 
 // Add Creates a new todo and appends it to the list

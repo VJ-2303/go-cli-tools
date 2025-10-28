@@ -8,7 +8,7 @@ import (
 	"github.com/VJ-2303/todo"
 )
 
-const todoFileName = ".todo.json"
+var todoFileName = ".todo.json"
 
 func main() {
 	task := flag.String("task", "", "Task to be included in the ToDo List")
@@ -21,6 +21,10 @@ func main() {
 	}
 
 	flag.Parse()
+
+	if os.Getenv("TODO_FILENAME") != "" {
+		todoFileName = os.Getenv("TODO_FILENAME")
+	}
 	l := &todo.List{}
 
 	if err := l.Get(todoFileName); err != nil {

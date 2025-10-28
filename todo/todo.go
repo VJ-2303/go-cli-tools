@@ -19,6 +19,18 @@ type item struct {
 // List represents a list of ToDo items
 type List []item
 
+func (l *List) String() string {
+	formatted := ""
+	for k, v := range *l {
+		prefix := " "
+		if v.Done {
+			prefix = "X"
+		}
+		formatted += fmt.Sprintf("%s %d: %s\n", prefix, k+1, v.Task)
+	}
+	return formatted
+}
+
 // Add Creates a new todo and appends it to the list
 func (l *List) Add(task string) {
 	t := item{

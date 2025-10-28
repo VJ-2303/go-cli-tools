@@ -15,6 +15,11 @@ func main() {
 	list := flag.Bool("list", false, "List all tasks")
 	complete := flag.Int("complete", 0, "Item to be completed")
 
+	flag.Usage = func() {
+		fmt.Fprintf(flag.CommandLine.Output(), "%s tool, build by VJ\n", os.Args[0])
+		flag.PrintDefaults()
+	}
+
 	flag.Parse()
 	l := &todo.List{}
 
@@ -25,11 +30,7 @@ func main() {
 
 	switch {
 	case *list:
-		for _, item := range *l {
-			if !item.Done {
-				fmt.Println(item.Task)
-			}
-		}
+		fmt.Print(l)
 	case *complete > 0:
 		if err := l.Complete(*complete); err != nil {
 			fmt.Fprintln(os.Stderr, err)

@@ -34,6 +34,8 @@ func main() {
 	}
 
 	switch {
+	case len(os.Args) == 1:
+		l.VerbosePrint()
 	case *list:
 		fmt.Print(l)
 	case *complete > 0:

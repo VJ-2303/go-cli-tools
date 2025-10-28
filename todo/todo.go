@@ -57,7 +57,7 @@ func (l *List) Delete(i int) error {
 // Save method encodes the List as a JSON and saves it
 // using the provided filename
 func (l *List) Save(filename string) error {
-	js, err := json.Marshal(l)
+	js, err := json.MarshalIndent(l, "", "\t")
 	if err != nil {
 		return err
 	}

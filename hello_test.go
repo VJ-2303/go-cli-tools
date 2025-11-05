@@ -11,7 +11,9 @@ func TestPrintToPrintsHelloMessageToGivenWriter(t *testing.T) {
 	t.Parallel()
 	buf := new(bytes.Buffer)
 
-	hello.PrintTo(buf)
+	hello.Output = buf
+
+	hello.Print()
 	want := "Hello, World\n"
 	got := buf.String()
 

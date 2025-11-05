@@ -3,8 +3,11 @@ package hello
 import (
 	"fmt"
 	"io"
+	"os"
 )
 
-func PrintTo(w io.Writer) {
-	fmt.Fprintln(w, "Hello, World")
+var Output io.Writer = os.Stdout
+
+func Print() {
+	fmt.Fprintln(Output, "Hello, World")
 }

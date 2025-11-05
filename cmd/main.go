@@ -5,6 +5,5 @@ import (
 )
 
 func main() {
-	p := hello.NewPrinter()
-	p.Print()
+	hello.Main()
 }

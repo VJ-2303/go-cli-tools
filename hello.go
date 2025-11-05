@@ -19,3 +19,7 @@ func NewPrinter() *Printer {
 func (p *Printer) Print() {
 	fmt.Fprintln(p.Output, "Hello, World")
 }
+
+func Main() {
+	NewPrinter().Print()
+}

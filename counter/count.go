@@ -2,6 +2,7 @@ package count
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"os"
 )
@@ -16,7 +17,7 @@ func NewCounter() *Counter {
 	}
 }
 
-func (c *Counter) Count() int {
+func (c *Counter) Lines() int {
 	lines := 0
 
 	input := bufio.NewScanner(c.Input)
@@ -26,4 +27,8 @@ func (c *Counter) Count() int {
 	}
 
 	return lines
+}
+
+func Main() {
+	fmt.Println(NewCounter().Lines())
 }

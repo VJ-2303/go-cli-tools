@@ -3,11 +3,12 @@ package hello
 import (
 	"fmt"
 	"io"
-	"os"
 )
 
-var Output io.Writer = os.Stdout
+type Printer struct {
+	Output io.Writer
+}
 
-func Print() {
-	fmt.Fprintln(Output, "Hello, World")
+func (p *Printer) Print() {
+	fmt.Fprintln(p.Output, "Hello, World")
 }

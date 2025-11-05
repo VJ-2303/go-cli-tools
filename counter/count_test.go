@@ -10,8 +10,9 @@ import (
 func TestLinesCountsLinesInInput(t *testing.T) {
 	t.Parallel()
 
-	c := count.NewCounter()
-	c.Input = bytes.NewBufferString("1\n2\n3")
+	buf := bytes.NewBufferString("1\n2\n3\n")
+
+	c, _ := count.NewCounter(count.WithInput(buf))
 
 	want := 3
 

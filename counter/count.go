@@ -36,6 +36,20 @@ func WithOutput(output io.Writer) option {
 	}
 }
 
+func WithInputFromArgs(args []string) option {
+	return func(c *Counter) error {
+		if len(args) < 1 {
+			return nil
+		}
+		f, err := os.Open(args[0])
+		if err != nil {
+			return err
+		}
+		c.Input = f
+		return nil
+	}
+}
+
 func NewCounter(opts ...option) (*Counter, error) {
 	c := &Counter{
 		Input:  os.Stdin,
@@ -63,9 +77,12 @@ func (c *Counter) Lines() int {
 }
 
 func Main() error {
-	c, err := NewCounter()
+	c, err := NewCounter(
+		WithInputFromArgs(os.Args[1:]),
+	)
 	if err != nil {
-		return err
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
 	fmt.Println(c.Lines())
 

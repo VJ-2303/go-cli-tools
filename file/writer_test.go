@@ -11,7 +11,7 @@ import (
 func TestWriteToFile_WritesGivenDataToFile(t *testing.T) {
 	t.Parallel()
 	path := "testdata/write_test.txt"
-	want := []byte{1, 2, 3}
+	want := []byte{1, 2, 3, 4}
 	err := writer.WriteToFile(path, want)
 	if err != nil {
 		t.Fatal(err)

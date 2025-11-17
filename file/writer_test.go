@@ -10,17 +10,10 @@ import (
 
 func TestWriteToFile_WritesGivenDataToFile(t *testing.T) {
 	t.Parallel()
-	path := "testdata/write_test.txt"
-
-	_, err := os.Stat(path)
-	if err == nil {
-		t.Fatalf("test artifact not cleaned up: %q", path)
-	}
-
-	defer os.Remove(path)
+	path := t.TempDir() + "/write_test.txt"
 
 	want := []byte{1, 2, 3, 4}
-	err = writer.WriteToFile(path, want)
+	err := writer.WriteToFile(path, want)
 	if err != nil {
 		t.Fatal(err)
 	}
